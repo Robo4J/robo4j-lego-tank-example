@@ -1,0 +1,22 @@
+<robo4j>
+    <roboUnit id="http">
+        <class>com.robo4j.core.unit.HttpUnit</class>
+        <config name="com.robo4j.core.root">
+            <value name="port" type="int">8025</value>
+            <value name="target" type="String">controller</value>
+        </config>
+    </roboUnit>
+
+    <roboUnit id="controller">
+        <class>com.robo4j.lego.tank.example.controller.TankExampleController</class>
+        <config name="com.robo4j.core.root">
+            <value name="target" type="String">platform</value>
+        </config>
+    </roboUnit>
+
+    <roboUnit id="platform">
+        <class>com.robo4j.units.lego.SimpleTankUnit</class>
+        <config name="com.robo4j.core.root">
+        </config>
+    </roboUnit>
+</robo4j>
