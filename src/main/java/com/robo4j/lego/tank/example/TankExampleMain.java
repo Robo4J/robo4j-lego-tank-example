@@ -33,6 +33,10 @@ public class TankExampleMain {
 
         SimpleTankUnit platform = new SimpleTankUnit(system, "platform");
         config = ConfigurationFactory.createEmptyConfiguration();
+        config.setString("leftMotorPort", "B");
+        config.setCharacter("leftMotorType", 'N');
+        config.setString("rightMotorPort", "C");
+        config.setCharacter("rightMotorType", 'N');
         platform.initialize(config);
 
         system.addUnits(http, ctrl, platform);
