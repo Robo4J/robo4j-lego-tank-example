@@ -6,6 +6,7 @@ import com.robo4j.core.RoboContext;
 import com.robo4j.core.RoboReference;
 import com.robo4j.core.client.util.ClientClassLoader;
 import com.robo4j.core.util.SystemUtil;
+import lejos.hardware.Button;
 
 import java.io.IOException;
 
@@ -36,8 +37,9 @@ public class TankExampleDeclarativeMain {
                 + httpRef.getConfiguration().getInteger("port", null) + "?type=lcd&command=down");
         System.out.println("\tRequest command types: up, down, select, left, right\n");
 
-        System.out.println("Press enter to quit!");
-        System.in.read();
+        System.out.println("Press Escape to quit!");
+        Button.ESCAPE.waitForPressAndRelease();
+        System.out.println("Press Going Down!");
         ctx.shutdown();
     }
 }

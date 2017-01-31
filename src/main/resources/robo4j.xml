@@ -7,6 +7,13 @@
         </config>
     </roboUnit>
 
+    <roboUnit id="buttons">
+        <class>com.robo4j.units.lego.BrickButtonsUnit</class>
+        <config name="com.robo4j.core.root">
+            <value name="target" type="String">controller</value>
+        </config>
+    </roboUnit>
+
     <roboUnit id="controller">
         <class>com.robo4j.lego.tank.example.controller.TankExampleController</class>
         <config name="com.robo4j.core.root">
