@@ -19,7 +19,7 @@ task fatJar(type: Jar) {
     manifest {
         attributes 'Implementation-Title': 'robo4j-lego-tank-example',
                 'Implementation-Version': version,
-                'Main-Class': 'com.robo4j.lego.tank.example.TankExampleDeclarativeMain'
+                'Main-Class': 'com.robo4j.lego.tank.example.TankExampleMain'
     }
     //baseName = project.name + '-all'
     baseName = 'robo4j-lego-tank-example'

@@ -19,6 +19,12 @@
         </config>
     </roboUnit>
 
+    <roboUnit id="lcd">
+        <class>com.robo4j.units.lego.LcdUnit</class>
+        <config name="com.robo4j.core.root">
+        </config>
+    </roboUnit>
+
     <roboUnit id="controller">
         <class>com.robo4j.lego.tank.example.controller.TankExampleController</class>
         <config name="com.robo4j.core.root">

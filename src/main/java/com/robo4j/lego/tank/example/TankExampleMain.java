@@ -7,6 +7,7 @@ import com.robo4j.core.unit.HttpUnit;
 import com.robo4j.core.util.SystemUtil;
 import com.robo4j.lego.tank.example.controller.TankExampleController;
 import com.robo4j.units.lego.BrickButtonsUnit;
+import com.robo4j.units.lego.LcdUnit;
 import com.robo4j.units.lego.SimpleTankUnit;
 
 import com.robo4j.units.lego.util.BrickUtils;
@@ -54,24 +55,20 @@ public class TankExampleMain {
         config.setCharacter("rightMotorType", 'N');
         platform.initialize(config);
 
-        system.addUnits(http, ctrl, platform, brickButtonsUnit);
+        LcdUnit lcd = new LcdUnit(system, "lcd");
+        config = ConfigurationFactory.createEmptyConfiguration();
+        lcd.initialize(config);
 
-        System.out.println("State before start:");
-        System.out.println(SystemUtil.generateStateReport(system));
+        system.addUnits(http, ctrl, platform, brickButtonsUnit, lcd);
         system.start();
+        lcd.onMessage("http server Port:" + PORT );
+        lcd.onMessage("Usage: Request GET:");
+        lcd.onMessage("http://<IP>:" + PORT + "?type");
+        lcd.onMessage("=tank&command=stop");
+        lcd.onMessage("commands: stop, move, back, left, right");
 
-        System.out.println("State after start:");
-        System.out.println(SystemUtil.generateStateReport(system));
-
-        System.out.println("RoboSystem http server\n\tPort:" + PORT + "\n");
-        System.out.println("Usage:\n\tRequest GET: http://<IP_ADDRESS>:" + PORT + "?type=tank&command=stop");
-        System.out.println("\tRequest command types: stop, move, back, left, right\n");
-
-        System.out.println("Press EscapeHTTP to quit!");
         Button.ESCAPE.waitForPressAndRelease();
-        System.out.println("Press Going Down!");
         system.shutdown();
-        System.out.println("is down!");
 
     }
 
