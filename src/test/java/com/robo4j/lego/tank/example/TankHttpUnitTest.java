@@ -2,6 +2,7 @@ package com.robo4j.lego.tank.example;
 
 import java.io.IOException;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.robo4j.core.ConfigurationException;
@@ -23,7 +24,6 @@ import com.robo4j.core.util.SystemUtil;
  * @since 01.02.2017
  */
 public class TankHttpUnitTest {
-    private static int PORT = 8025;
 
     @Test
     public void testProgrammatically() throws ConfigurationException, IOException{
@@ -31,16 +31,19 @@ public class TankHttpUnitTest {
         Configuration config = ConfigurationFactory.createEmptyConfiguration();
 
         HttpUnit http = new HttpUnit(system, "http");
-        config.setString("target", "controller");
-        config.setInteger("port", PORT);
+        config.setString("target", "");
+        config.setInteger("port", TankExampleMain.PORT);
         http.initialize(config);
-        printSystem(system);
 
         system.addUnits(http);
+        printSystem(system);
+
 
         System.out.println("Press Going Down!");
         system.shutdown();
         System.out.println("System is Down!");
+        Assert.assertNotNull(system.getUnits());
+        Assert.assertEquals(system.getUnits().size(), 1);
 
     }
 
@@ -54,6 +57,8 @@ public class TankHttpUnitTest {
         System.out.println("Press Going Down!");
         ctx.shutdown();
         System.out.println("System is Down!");
+        Assert.assertNotNull(ctx.getUnits());
+        Assert.assertEquals(ctx.getUnits().size(), 1);
     }
 
     //Private Methods
@@ -65,8 +70,8 @@ public class TankHttpUnitTest {
         System.out.println("State after start:");
         System.out.println(SystemUtil.generateStateReport(system));
 
-        System.out.println("RoboSystem http server\n\tPort:" + PORT + "\n");
-        System.out.println("Usage:\n\tRequest GET: http://<IP_ADDRESS>:" + PORT + "?type=tank&command=stop");
+        System.out.println("RoboSystem http server\n\tPort:" + TankExampleMain.PORT + "\n");
+        System.out.println("Usage:\n\tRequest GET: http://<IP_ADDRESS>:" + TankExampleMain.PORT + "?type=tank&command=stop");
         System.out.println("\tRequest command types: stop, move, back, left, right\n");
     }
 

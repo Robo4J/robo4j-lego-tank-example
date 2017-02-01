@@ -9,6 +9,7 @@ import com.robo4j.lego.tank.example.controller.TankExampleController;
 import com.robo4j.units.lego.BrickButtonsUnit;
 import com.robo4j.units.lego.SimpleTankUnit;
 
+import com.robo4j.units.lego.util.BrickUtils;
 import lejos.hardware.Button;
 
 /**
@@ -18,7 +19,7 @@ import lejos.hardware.Button;
  */
 public class TankExampleMain {
 
-    private static int PORT = 8025;
+    protected static final int PORT = 8025;
 
     public static void main(String[] args) throws Exception{
         RoboSystem system = new RoboSystem();
@@ -32,6 +33,11 @@ public class TankExampleMain {
         BrickButtonsUnit brickButtonsUnit = new BrickButtonsUnit(system, "buttons");
         config = ConfigurationFactory.createEmptyConfiguration();
         config.setString("target", "controller");
+        config.setString(BrickUtils.PREFIX_BUTTON.concat("right"), "left");
+        config.setString(BrickUtils.PREFIX_BUTTON.concat("left"), "right");
+        config.setString(BrickUtils.PREFIX_BUTTON.concat("up"), "down");
+        config.setString(BrickUtils.PREFIX_BUTTON.concat("down"), "up");
+        config.setString(BrickUtils.PREFIX_BUTTON.concat("enter"), "enter");
         brickButtonsUnit.initialize(config);
 
 
