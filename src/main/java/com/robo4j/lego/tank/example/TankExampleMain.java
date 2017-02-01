@@ -8,6 +8,7 @@ import com.robo4j.core.util.SystemUtil;
 import com.robo4j.lego.tank.example.controller.TankExampleController;
 import com.robo4j.units.lego.BrickButtonsUnit;
 import com.robo4j.units.lego.SimpleTankUnit;
+
 import lejos.hardware.Button;
 
 /**
@@ -47,8 +48,7 @@ public class TankExampleMain {
         config.setCharacter("rightMotorType", 'N');
         platform.initialize(config);
 
-//        system.addUnits(http, ctrl, platform, brickButtonsUnit);
-        system.addUnits(ctrl, platform, brickButtonsUnit);
+        system.addUnits(http, ctrl, platform, brickButtonsUnit);
 
         System.out.println("State before start:");
         System.out.println(SystemUtil.generateStateReport(system));
@@ -57,16 +57,15 @@ public class TankExampleMain {
         System.out.println("State after start:");
         System.out.println(SystemUtil.generateStateReport(system));
 
-        system.getReference("platform").sendMessage("stop");
-
         System.out.println("RoboSystem http server\n\tPort:" + PORT + "\n");
         System.out.println("Usage:\n\tRequest GET: http://<IP_ADDRESS>:" + PORT + "?type=tank&command=stop");
         System.out.println("\tRequest command types: stop, move, back, left, right\n");
 
-        System.out.println("Press Escape to quit!");
+        System.out.println("Press EscapeHTTP to quit!");
         Button.ESCAPE.waitForPressAndRelease();
         System.out.println("Press Going Down!");
         system.shutdown();
+        System.out.println("is down!");
 
     }
 

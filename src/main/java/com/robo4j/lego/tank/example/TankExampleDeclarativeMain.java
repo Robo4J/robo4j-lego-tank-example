@@ -28,8 +28,6 @@ public class TankExampleDeclarativeMain {
         System.out.println("State after start:");
         System.out.println(SystemUtil.generateStateReport(ctx));
 
-        ctx.getReference("platform").sendMessage("stop");
-
         RoboReference<Object> httpRef = ctx.getReference("http");
         System.out.println(
                 "RoboSystem http server\n\tPort:" + httpRef.getConfiguration().getInteger("port", null) + "\n");

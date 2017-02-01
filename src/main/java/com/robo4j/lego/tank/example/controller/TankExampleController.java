@@ -37,10 +37,6 @@ public class TankExampleController extends RoboUnit<String> {
             processPlatformMessage(myMessage);
         }
 
-        if(message == null){
-            getContext().shutdown();
-        }
-
         return null;
     }
 
