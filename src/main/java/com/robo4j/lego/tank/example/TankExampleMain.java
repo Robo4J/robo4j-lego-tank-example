@@ -4,14 +4,12 @@ import com.robo4j.core.RoboSystem;
 import com.robo4j.core.configuration.Configuration;
 import com.robo4j.core.configuration.ConfigurationFactory;
 import com.robo4j.core.unit.HttpUnit;
-import com.robo4j.core.util.SystemUtil;
 import com.robo4j.lego.tank.example.controller.TankExampleController;
 import com.robo4j.units.lego.BrickButtonsUnit;
 import com.robo4j.units.lego.LcdUnit;
 import com.robo4j.units.lego.SimpleTankUnit;
-
 import com.robo4j.units.lego.util.BrickUtils;
-import lejos.hardware.Button;
+import com.robo4j.units.lego.util.EscapeButtonUtil;
 
 /**
  * @author Marcus Hirt (@hirt)
@@ -69,7 +67,7 @@ public class TankExampleMain {
         lcd.onMessage("=tank&command=stop");
         lcd.onMessage("commands: stop, move, back, left, right");
 
-        Button.ESCAPE.waitForPressAndRelease();
+        EscapeButtonUtil.waitForPressAndRelease();
         system.shutdown();
 
     }

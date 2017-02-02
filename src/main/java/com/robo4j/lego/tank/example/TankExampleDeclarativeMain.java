@@ -1,14 +1,14 @@
 package com.robo4j.lego.tank.example;
 
+import java.io.IOException;
+
 import com.robo4j.core.RoboBuilder;
 import com.robo4j.core.RoboBuilderException;
 import com.robo4j.core.RoboContext;
 import com.robo4j.core.RoboReference;
 import com.robo4j.core.client.util.ClientClassLoader;
 import com.robo4j.core.util.SystemUtil;
-import lejos.hardware.Button;
-
-import java.io.IOException;
+import com.robo4j.units.lego.util.EscapeButtonUtil;
 
 /**
  * @author Marcus Hirt (@hirt)
@@ -36,7 +36,7 @@ public class TankExampleDeclarativeMain {
         System.out.println("\tRequest command types: up, down, select, left, right\n");
 
         System.out.println("Press Escape to quit!");
-        Button.ESCAPE.waitForPressAndRelease();
+        EscapeButtonUtil.waitForPressAndRelease();
         System.out.println("Press Going Down!");
         ctx.shutdown();
     }

@@ -32,5 +32,4 @@ dependencies {
     compile "com.robo4j:robo4j-units-lego:${robo4jVersion}"
     testCompile "com.robo4j:robo4j-units-lego-test:${robo4jVersion}"
     testCompile "junit:junit:${junitVersion}@jar"
-    testCompile "org.hamcrest:hamcrest-all:${hamcrestAllVersion}@jar"
 }

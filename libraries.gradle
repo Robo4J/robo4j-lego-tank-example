@@ -22,5 +22,4 @@ println "configure $project"
 ext {
     robo4jVersion = "alpha-0.3"
     junitVersion = "4.12"
-    hamcrestAllVersion = "1.3"
 }
