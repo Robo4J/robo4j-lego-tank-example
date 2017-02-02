@@ -47,6 +47,7 @@ public class TankExampleMain {
         config.setString("target", "platform");
         ctrl.initialize(config);
 
+        /* platform is listening to the bus */
         SimpleTankUnit platform = new SimpleTankUnit(system, "platform");
         config = ConfigurationFactory.createEmptyConfiguration();
         config.setString("leftMotorPort", "B");
@@ -55,6 +56,7 @@ public class TankExampleMain {
         config.setCharacter("rightMotorType", 'N');
         platform.initialize(config);
 
+        /* lcd is listening to the bus */
         LcdUnit lcd = new LcdUnit(system, "lcd");
         config = ConfigurationFactory.createEmptyConfiguration();
         lcd.initialize(config);
