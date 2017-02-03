@@ -60,7 +60,7 @@ public class TankExampleTests {
 		lcd.onMessage("commands: stop, move, back, left, right");
 
 		lcd.onMessage("Press Key to end...");
-		System.in.read();
+//		System.in.read();
 
 		system.shutdown();
 

@@ -8,7 +8,7 @@ import com.robo4j.core.RoboContext;
 import com.robo4j.core.RoboReference;
 import com.robo4j.core.client.util.ClientClassLoader;
 import com.robo4j.core.util.SystemUtil;
-import com.robo4j.units.lego.util.EscapeButtonUtil;
+import com.robo4j.hw.lego.util.EscapeButtonUtil;
 
 /**
  * @author Marcus Hirt (@hirt)

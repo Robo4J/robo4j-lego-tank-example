@@ -5,8 +5,8 @@ import com.robo4j.core.RoboContext;
 import com.robo4j.core.RoboResult;
 import com.robo4j.core.RoboUnit;
 import com.robo4j.core.configuration.Configuration;
+import com.robo4j.units.lego.enums.LegoPlatformMessageTypeEnum;
 import com.robo4j.units.lego.platform.LegoPlatformMessage;
-import com.robo4j.units.lego.platform.LegoPlatformMessageType;
 
 /**
  * This controller binds together {@link SimpleTankUnit}, {@link HttpUnit} and
@@ -28,12 +28,12 @@ public class TankExampleController extends RoboUnit<String> {
     @Override
     public RoboResult<String, ?> onMessage(Object message) {
 
-        if (message instanceof LegoPlatformMessageType) {
-            LegoPlatformMessageType myMessage = (LegoPlatformMessageType) message;
+        if (message instanceof LegoPlatformMessageTypeEnum) {
+            LegoPlatformMessageTypeEnum myMessage = (LegoPlatformMessageTypeEnum) message;
             processPlatformMessage(myMessage);
         }
         if (message instanceof String) {
-            LegoPlatformMessageType myMessage = LegoPlatformMessageType.getByText(message.toString());
+            LegoPlatformMessageTypeEnum myMessage = LegoPlatformMessageTypeEnum.getByText(message.toString());
             processPlatformMessage(myMessage);
         }
 
@@ -54,7 +54,7 @@ public class TankExampleController extends RoboUnit<String> {
          ctx.getReference(target).sendMessage(message);
     }
 
-    private void processPlatformMessage(LegoPlatformMessageType myMessage){
+    private void processPlatformMessage(LegoPlatformMessageTypeEnum myMessage){
         sendTankMessage(getContext(), new LegoPlatformMessage(myMessage));
     }
 }
