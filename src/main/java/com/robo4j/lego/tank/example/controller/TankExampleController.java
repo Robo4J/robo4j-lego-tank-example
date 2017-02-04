@@ -16,45 +16,56 @@ import com.robo4j.units.lego.platform.LegoPlatformMessage;
  * @author Miro Wengner (@miragemiko)
  * @since 30.01.2017
  */
-public class TankExampleController extends RoboUnit<String> {
+public class TankExampleController extends RoboUnit<Object> {
 
-    private String target;
+	private String target;
 
-    public TankExampleController(RoboContext context, String id) {
-        super(context, id);
-    }
+	public TankExampleController(RoboContext context, String id) {
+		super(context, id);
+	}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public RoboResult<String, ?> onMessage(Object message) {
+	/**
+	 *
+	 * @param message
+	 *            accepted message
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public RoboResult<String, ?> onMessage(Object message) {
 
-        if (message instanceof LegoPlatformMessageTypeEnum) {
-            LegoPlatformMessageTypeEnum myMessage = (LegoPlatformMessageTypeEnum) message;
-            processPlatformMessage(myMessage);
-        }
-        if (message instanceof String) {
-            LegoPlatformMessageTypeEnum myMessage = LegoPlatformMessageTypeEnum.getByText(message.toString());
-            processPlatformMessage(myMessage);
-        }
+		if (message instanceof LegoPlatformMessageTypeEnum) {
+			LegoPlatformMessageTypeEnum myMessage = (LegoPlatformMessageTypeEnum) message;
+			processPlatformMessage(myMessage);
+		}
+		if (message instanceof String) {
+			LegoPlatformMessageTypeEnum myMessage = LegoPlatformMessageTypeEnum.getByText(message.toString());
+			processPlatformMessage(myMessage);
+		}
 
-        return null;
-    }
+		return null;
+	}
 
+	/**
+	 *
+	 * @param configuration
+	 *            desired configuration
+	 * @throws ConfigurationException
+	 */
+	@Override
+	protected void onInitialization(Configuration configuration) throws ConfigurationException {
+		target = configuration.getString("target", null);
+		if (target == null) {
+			throw ConfigurationException.createMissingConfigNameException("target");
+		}
+	}
 
-    @Override
-    protected void onInitialization(Configuration configuration) throws ConfigurationException {
-        target = configuration.getString("target", null);
-        if (target == null) {
-            throw ConfigurationException.createMissingConfigNameException("target");
-        }
-    }
+	// Private Methods
+	private void sendTankMessage(RoboContext ctx, LegoPlatformMessage message) {
+		ctx.getReference(target).sendMessage(message);
+	}
 
-    //Private Methods
-    private void sendTankMessage(RoboContext ctx, LegoPlatformMessage message){
-         ctx.getReference(target).sendMessage(message);
-    }
-
-    private void processPlatformMessage(LegoPlatformMessageTypeEnum myMessage){
-        sendTankMessage(getContext(), new LegoPlatformMessage(myMessage));
-    }
+	private void processPlatformMessage(LegoPlatformMessageTypeEnum myMessage) {
+		sendTankMessage(getContext(), new LegoPlatformMessage(myMessage));
+	}
 }
