@@ -7,6 +7,7 @@ import com.robo4j.core.RoboUnit;
 import com.robo4j.core.configuration.Configuration;
 import com.robo4j.units.lego.enums.LegoPlatformMessageTypeEnum;
 import com.robo4j.units.lego.platform.LegoPlatformMessage;
+import com.robo4j.units.lego.sensor.LegoSensorMessage;
 
 /**
  * This controller binds together {@link SimpleTankUnit}, {@link HttpUnit} and
@@ -41,6 +42,10 @@ public class TankExampleController extends RoboUnit<Object> {
 		if (message instanceof String) {
 			LegoPlatformMessageTypeEnum myMessage = LegoPlatformMessageTypeEnum.getByText(message.toString());
 			processPlatformMessage(myMessage);
+		}
+
+		if(message instanceof LegoSensorMessage){
+			System.out.println(getClass().getSimpleName() + "sensor: " + message);
 		}
 
 		return null;

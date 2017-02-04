@@ -1,5 +1,6 @@
 package com.robo4j.lego.tank.example;
 
+import com.robo4j.units.lego.BasicSonicUnit;
 import org.junit.Test;
 
 import com.robo4j.core.RoboSystem;
@@ -51,7 +52,12 @@ public class TankExampleTests {
 		config = ConfigurationFactory.createEmptyConfiguration();
 		lcd.initialize(config);
 
-		system.addUnits(http, ctrl, platform, lcd);
+		BasicSonicUnit sonic = new BasicSonicUnit(system, "sonic");
+		config = ConfigurationFactory.createEmptyConfiguration();
+		config.setString("target", "controller");
+		sonic.initialize(config);
+
+		system.addUnits(http, ctrl, platform, lcd, sonic);
 		system.start();
 		lcd.onMessage("http server Port:" + TankExampleMain.PORT);
 		lcd.onMessage("Usage: Request GET:");

@@ -7,6 +7,7 @@ import com.robo4j.core.unit.HttpUnit;
 import com.robo4j.hw.lego.util.BrickUtils;
 import com.robo4j.hw.lego.util.EscapeButtonUtil;
 import com.robo4j.lego.tank.example.controller.TankExampleController;
+import com.robo4j.units.lego.BasicSonicUnit;
 import com.robo4j.units.lego.BrickButtonsUnit;
 import com.robo4j.units.lego.LcdUnit;
 import com.robo4j.units.lego.SimpleTankUnit;
@@ -59,7 +60,13 @@ public class TankExampleMain {
         config = ConfigurationFactory.createEmptyConfiguration();
         lcd.initialize(config);
 
-        system.addUnits(http, ctrl, platform, brickButtonsUnit, lcd);
+        BasicSonicUnit sonic = new BasicSonicUnit(system, "sonic");
+        config = ConfigurationFactory.createEmptyConfiguration();
+        config.setString("target", "controller");
+        sonic.initialize(config);
+
+        system.addUnits(http, ctrl, platform, brickButtonsUnit, lcd, sonic);
+
         system.start();
         lcd.onMessage("http server Port:" + PORT );
         lcd.onMessage("Usage: Request GET:");
