@@ -1,12 +1,11 @@
 package com.robo4j.lego.tank.example;
 
-import com.robo4j.units.lego.BasicSonicUnit;
 import org.junit.Test;
 
 import com.robo4j.core.RoboSystem;
 import com.robo4j.core.configuration.Configuration;
 import com.robo4j.core.configuration.ConfigurationFactory;
-import com.robo4j.core.unit.HttpUnit;
+import com.robo4j.core.unit.HttpDynamicUnit;
 import com.robo4j.lego.tank.example.controller.TankExampleController;
 import com.robo4j.units.lego.LcdTestUnit;
 import com.robo4j.units.lego.SimpleTankTestUnit;
@@ -28,9 +27,15 @@ public class TankExampleTests {
 		RoboSystem system = new RoboSystem();
 		Configuration config = ConfigurationFactory.createEmptyConfiguration();
 
-		HttpUnit http = new HttpUnit(system, "http");
+		HttpDynamicUnit http = new HttpDynamicUnit(system, "http");
 		config.setString("target", "controller");
 		config.setInteger("port", TankExampleMain.PORT);
+		config.setInteger("pathsNumber", 1);
+		config.setString("path_0", "tank");
+		config.setString("method_0", "GET");
+		config.setInteger("pathCommands_0", 1);
+		config.setString("commandName_0_0", "command");
+		config.setString("commandValues_0_0", "stop,left,right,move,back");
 		http.initialize(config);
 
 		TankExampleController ctrl = new TankExampleController(system, "controller");
@@ -52,21 +57,22 @@ public class TankExampleTests {
 		config = ConfigurationFactory.createEmptyConfiguration();
 		lcd.initialize(config);
 
-		BasicSonicUnit sonic = new BasicSonicUnit(system, "sonic");
-		config = ConfigurationFactory.createEmptyConfiguration();
-		config.setString("target", "controller");
-		sonic.initialize(config);
+		// BasicSonicUnit sonic = new BasicSonicUnit(system, "sonic");
+		// config = ConfigurationFactory.createEmptyConfiguration();
+		// config.setString("target", "controller");
+		// sonic.initialize(config);
 
-		system.addUnits(http, ctrl, platform, lcd, sonic);
+		// system.addUnits(http, ctrl, platform, lcd, sonic);
+		system.addUnits(http, ctrl, platform, lcd);
 		system.start();
 		lcd.onMessage("http server Port:" + TankExampleMain.PORT);
 		lcd.onMessage("Usage: Request GET:");
-		lcd.onMessage("http://<IP>:" + TankExampleMain.PORT + "?type");
-		lcd.onMessage("=tank&command=stop");
+		lcd.onMessage("http://<IP>:" + TankExampleMain.PORT + "/tank?");
+		lcd.onMessage("command=stop");
 		lcd.onMessage("commands: stop, move, back, left, right");
 
 		lcd.onMessage("Press Key to end...");
-//		System.in.read();
+		System.in.read();
 
 		system.shutdown();
 

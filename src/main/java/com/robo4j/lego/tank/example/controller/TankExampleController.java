@@ -44,7 +44,7 @@ public class TankExampleController extends RoboUnit<Object> {
 			processPlatformMessage(myMessage);
 		}
 
-		if(message instanceof LegoSensorMessage){
+		if (message instanceof LegoSensorMessage) {
 			System.out.println(getClass().getSimpleName() + "sensor: " + message);
 		}
 
