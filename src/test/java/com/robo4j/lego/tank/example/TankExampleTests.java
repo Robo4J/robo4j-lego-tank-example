@@ -5,7 +5,7 @@ import org.junit.Test;
 import com.robo4j.core.RoboSystem;
 import com.robo4j.core.configuration.Configuration;
 import com.robo4j.core.configuration.ConfigurationFactory;
-import com.robo4j.core.unit.HttpDynamicUnit;
+import com.robo4j.core.unit.HttpUnit;
 import com.robo4j.lego.tank.example.controller.TankExampleController;
 import com.robo4j.units.lego.LcdTestUnit;
 import com.robo4j.units.lego.SimpleTankTestUnit;
@@ -27,7 +27,7 @@ public class TankExampleTests {
 		RoboSystem system = new RoboSystem();
 		Configuration config = ConfigurationFactory.createEmptyConfiguration();
 
-		HttpDynamicUnit http = new HttpDynamicUnit(system, "http");
+		HttpUnit http = new HttpUnit(system, "http");
 		config.setString("target", "controller");
 		config.setInteger("port", TankExampleMain.PORT);
 		config.setInteger("pathsNumber", 1);
@@ -72,7 +72,7 @@ public class TankExampleTests {
 		lcd.onMessage("commands: stop, move, back, left, right");
 
 		lcd.onMessage("Press Key to end...");
-		System.in.read();
+//		System.in.read();
 
 		system.shutdown();
 

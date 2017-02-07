@@ -13,7 +13,7 @@ import com.robo4j.core.RoboSystem;
 import com.robo4j.core.client.util.ClientClassLoader;
 import com.robo4j.core.configuration.Configuration;
 import com.robo4j.core.configuration.ConfigurationFactory;
-import com.robo4j.core.unit.HttpDynamicUnit;
+import com.robo4j.core.unit.HttpUnit;
 import com.robo4j.core.util.SystemUtil;
 
 /**
@@ -30,7 +30,7 @@ public class TankHttpUnitTest {
 		RoboSystem system = new RoboSystem();
 		Configuration config = ConfigurationFactory.createEmptyConfiguration();
 
-		HttpDynamicUnit http = new HttpDynamicUnit(system, "http");
+		HttpUnit http = new HttpUnit(system, "http");
 		config.setString("target", "");
 		config.setInteger("port", TankExampleMain.PORT);
 		config.setInteger("pathsNumber", 1);
@@ -80,7 +80,7 @@ public class TankHttpUnitTest {
 
 		System.out.println("RoboSystem http server\n\tPort:" + TankExampleMain.PORT + "\n");
 		System.out.println(
-				"Usage:\n\tRequest GET: http://<IP_ADDRESS>:" + TankExampleMain.PORT + "?type=tank&command=stop");
+				"Usage:\n\tRequest GET: http://<IP_ADDRESS>:" + TankExampleMain.PORT + "/tank?&command=stop");
 		System.out.println("\tRequest command types: stop, move, back, left, right\n");
 	}
 

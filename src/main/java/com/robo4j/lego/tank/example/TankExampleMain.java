@@ -3,7 +3,7 @@ package com.robo4j.lego.tank.example;
 import com.robo4j.core.RoboSystem;
 import com.robo4j.core.configuration.Configuration;
 import com.robo4j.core.configuration.ConfigurationFactory;
-import com.robo4j.core.unit.HttpDynamicUnit;
+import com.robo4j.core.unit.HttpUnit;
 import com.robo4j.hw.lego.util.BrickUtils;
 import com.robo4j.hw.lego.util.EscapeButtonUtil;
 import com.robo4j.lego.tank.example.controller.TankExampleController;
@@ -25,7 +25,7 @@ public class TankExampleMain {
 		RoboSystem system = new RoboSystem();
 		Configuration config = ConfigurationFactory.createEmptyConfiguration();
 
-		HttpDynamicUnit http = new HttpDynamicUnit(system, "http");
+		HttpUnit http = new HttpUnit(system, "http");
 		config.setString("target", "controller");
 		config.setInteger("port", PORT);
 		config.setInteger("pathsNumber", 1);
