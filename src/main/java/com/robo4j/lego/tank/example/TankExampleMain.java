@@ -22,10 +22,20 @@ public class TankExampleMain {
 	protected static final int PORT = 8025;
 
 	public static void main(String[] args) throws Exception {
-		RoboSystem system = new RoboSystem();
+		TankExampleMain tank = new TankExampleMain();
+		RoboSystem system = tank.initSystem();
+		tank.shutdown(system);
+	}
+
+	public TankExampleMain(){
+
+	}
+
+	public RoboSystem initSystem() throws Exception {
+		RoboSystem result = new RoboSystem();
 		Configuration config = ConfigurationFactory.createEmptyConfiguration();
 
-		HttpServerUnit http = new HttpServerUnit(system, "http");
+		HttpServerUnit http = new HttpServerUnit(result, "http");
 		config.setString("target", "controller");
 		config.setInteger("port", PORT);
 		/* specific configuration */
@@ -39,7 +49,7 @@ public class TankExampleMain {
 		commands.setString("stop", "stop");
 		http.initialize(config);
 
-		BrickButtonsUnit brickButtonsUnit = new BrickButtonsUnit(system, "buttons");
+		BrickButtonsUnit brickButtonsUnit = new BrickButtonsUnit(result, "buttons");
 		config = ConfigurationFactory.createEmptyConfiguration();
 		config.setString("target", "controller");
 		config.setString(BrickUtils.PREFIX_BUTTON.concat("right"), "left");
@@ -49,13 +59,13 @@ public class TankExampleMain {
 		config.setString(BrickUtils.PREFIX_BUTTON.concat("enter"), "enter");
 		brickButtonsUnit.initialize(config);
 
-		TankExampleController ctrl = new TankExampleController(system, "controller");
+		TankExampleController ctrl = new TankExampleController(result, "controller");
 		config = ConfigurationFactory.createEmptyConfiguration();
 		config.setString("target", "platform");
 		ctrl.initialize(config);
 
 		/* platform is listening to the bus */
-		SimpleTankUnit platform = new SimpleTankUnit(system, "platform");
+		SimpleTankUnit platform = new SimpleTankUnit(result, "platform");
 		config = ConfigurationFactory.createEmptyConfiguration();
 		config.setString("leftMotorPort", "B");
 		config.setCharacter("leftMotorType", 'N');
@@ -64,27 +74,32 @@ public class TankExampleMain {
 		platform.initialize(config);
 
 		/* lcd is listening to the bus */
-		LcdUnit lcd = new LcdUnit(system, "lcd");
+		LcdUnit lcd = new LcdUnit(result, "lcd");
 		config = ConfigurationFactory.createEmptyConfiguration();
 		lcd.initialize(config);
 
-		BasicSonicUnit sonic = new BasicSonicUnit(system, "sonic");
+		BasicSonicUnit sonic = new BasicSonicUnit(result, "sonic");
 		config = ConfigurationFactory.createEmptyConfiguration();
 		config.setString("target", "controller");
 		sonic.initialize(config);
 
-		system.addUnits(http, ctrl, platform, brickButtonsUnit, lcd, sonic);
 
-		system.start();
+		result.addUnits(http, ctrl, platform, brickButtonsUnit, lcd, sonic);
+
+		result.start();
 		lcd.onMessage("http server Port:" + PORT);
 		lcd.onMessage("Usage: Request GET:");
 		lcd.onMessage("http://<IP>:" + PORT + "?type");
 		lcd.onMessage("=tank&command=stop");
 		lcd.onMessage("commands: stop, move, back, left, right");
 
+		return result;
+
+	}
+
+	public void shutdown(RoboSystem system){
 		EscapeButtonUtil.waitForPressAndRelease();
 		system.shutdown();
-
 	}
 
 }
