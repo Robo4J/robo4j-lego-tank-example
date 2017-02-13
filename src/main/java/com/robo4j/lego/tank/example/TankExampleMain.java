@@ -28,12 +28,15 @@ public class TankExampleMain {
 		HttpServerUnit http = new HttpServerUnit(system, "http");
 		config.setString("target", "controller");
 		config.setInteger("port", PORT);
-		config.setInteger("pathsNumber", 1);
-		config.setString("path_0", "tank");
-		config.setString("method_0", "GET");
-		config.setInteger("pathCommands_0", 1);
-		config.setString("commandName_0_0", "command");
-		config.setString("commandValues_0_0", "stop,left,right,move,back");
+		/* specific configuration */
+		Configuration commands = config.createChildConfiguration("commands");
+		commands.setString("path", "tank");
+		commands.setString("method", "GET");
+		commands.setString("move", "move");
+		commands.setString("back", "back");
+		commands.setString("right", "right");
+		commands.setString("left", "left");
+		commands.setString("stop", "stop");
 		http.initialize(config);
 
 		BrickButtonsUnit brickButtonsUnit = new BrickButtonsUnit(system, "buttons");

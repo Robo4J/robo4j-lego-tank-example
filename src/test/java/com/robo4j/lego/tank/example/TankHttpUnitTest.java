@@ -10,10 +10,10 @@ import com.robo4j.core.RoboBuilder;
 import com.robo4j.core.RoboBuilderException;
 import com.robo4j.core.RoboContext;
 import com.robo4j.core.RoboSystem;
-import com.robo4j.core.client.util.ClientClassLoader;
+import com.robo4j.core.client.util.RoboClassLoader;
 import com.robo4j.core.configuration.Configuration;
 import com.robo4j.core.configuration.ConfigurationFactory;
-import com.robo4j.core.unit.HttpUnit;
+import com.robo4j.core.unit.HttpServerUnit;
 import com.robo4j.core.util.SystemUtil;
 
 /**
@@ -30,15 +30,18 @@ public class TankHttpUnitTest {
 		RoboSystem system = new RoboSystem();
 		Configuration config = ConfigurationFactory.createEmptyConfiguration();
 
-		HttpUnit http = new HttpUnit(system, "http");
+		HttpServerUnit http = new HttpServerUnit(system, "http");
 		config.setString("target", "");
 		config.setInteger("port", TankExampleMain.PORT);
-		config.setInteger("pathsNumber", 1);
-		config.setInteger("pathCommands_0", 1);
-		config.setString("path_0", "tank");
-		config.setString("method_0", "GET");
-		config.setString("commandName_0_0", "command");
-		config.setString("commandValues_0_0", "stop,left,right,move,back");
+		/* specific configuration */
+		Configuration commands = config.createChildConfiguration("commands");
+		commands.setString("path", "tank");
+		commands.setString("method", "GET");
+		commands.setString("up", "move");
+		commands.setString("down", "back");
+		commands.setString("left", "right");
+		commands.setString("right", "left");
+
 		http.initialize(config);
 
 		system.addUnits(http);
@@ -56,7 +59,7 @@ public class TankHttpUnitTest {
 
 	@Test
 	public void testDeclarative() throws RoboBuilderException {
-		RoboBuilder builder = new RoboBuilder().add(ClientClassLoader.getInstance().getResource("robo4j_http.xml"));
+		RoboBuilder builder = new RoboBuilder().add(RoboClassLoader.getInstance().getResource("robo4j_http.xml"));
 		RoboContext ctx = builder.build();
 		ctx.start();
 
