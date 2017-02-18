@@ -2,7 +2,6 @@ package com.robo4j.lego.tank.example.controller;
 
 import com.robo4j.core.ConfigurationException;
 import com.robo4j.core.RoboContext;
-import com.robo4j.core.RoboResult;
 import com.robo4j.core.RoboUnit;
 import com.robo4j.core.configuration.Configuration;
 import com.robo4j.units.lego.enums.LegoPlatformMessageTypeEnum;
@@ -22,7 +21,7 @@ public class TankExampleController extends RoboUnit<Object> {
 	private String target;
 
 	public TankExampleController(RoboContext context, String id) {
-		super(context, id);
+		super(Object.class, context, id);
 	}
 
 	/**
@@ -33,8 +32,7 @@ public class TankExampleController extends RoboUnit<Object> {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public RoboResult<String, ?> onMessage(Object message) {
-
+	public void onMessage(Object message) {
 		if (message instanceof LegoPlatformMessageTypeEnum) {
 			LegoPlatformMessageTypeEnum myMessage = (LegoPlatformMessageTypeEnum) message;
 			processPlatformMessage(myMessage);
@@ -47,8 +45,6 @@ public class TankExampleController extends RoboUnit<Object> {
 		if (message instanceof LegoSensorMessage) {
 			System.out.println(getClass().getSimpleName() + "sensor: " + message);
 		}
-
-		return null;
 	}
 
 	/**
