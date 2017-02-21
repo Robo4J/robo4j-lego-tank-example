@@ -11,9 +11,10 @@ import com.robo4j.core.RoboBuilderException;
 import com.robo4j.core.RoboContext;
 import com.robo4j.core.RoboSystem;
 import com.robo4j.core.client.util.RoboClassLoader;
+import com.robo4j.core.client.util.RoboHttpUtils;
 import com.robo4j.core.configuration.Configuration;
 import com.robo4j.core.configuration.ConfigurationFactory;
-import com.robo4j.core.unit.HttpServerUnit;
+import com.robo4j.core.httpunit.HttpServerUnit;
 import com.robo4j.core.util.SystemUtil;
 
 /**
@@ -34,13 +35,8 @@ public class TankHttpUnitTest {
 		config.setString("target", "");
 		config.setInteger("port", TankExampleMain.PORT);
 		/* specific configuration */
-		Configuration commands = config.createChildConfiguration("commands");
-		commands.setString("path", "tank");
-		commands.setString("method", "GET");
-		commands.setString("up", "move");
-		commands.setString("down", "back");
-		commands.setString("left", "right");
-		commands.setString("right", "left");
+		Configuration targetUnits = config.createChildConfiguration(RoboHttpUtils.HTTP_TARGET_UNITS);
+		targetUnits.setString("controller", "GET");
 
 		http.initialize(config);
 
