@@ -1,27 +1,33 @@
 package com.robo4j.lego.tank.example.controller;
 
+import java.util.Collection;
+import java.util.Collections;
+
+import com.robo4j.core.AttributeDescriptor;
 import com.robo4j.core.ConfigurationException;
+import com.robo4j.core.DefaultAttributeDescriptor;
 import com.robo4j.core.RoboContext;
 import com.robo4j.core.RoboUnit;
 import com.robo4j.core.configuration.Configuration;
 import com.robo4j.units.lego.enums.LegoPlatformMessageTypeEnum;
 import com.robo4j.units.lego.platform.LegoPlatformMessage;
-import com.robo4j.units.lego.sensor.LegoSensorMessage;
 
 /**
- * This controller binds together {@link SimpleTankUnit}, {@link HttpUnit} and
- * {@link LegoButtonUnit} to provide a demo.
- *
  * @author Marcus Hirt (@hirt)
  * @author Miro Wengner (@miragemiko)
  * @since 30.01.2017
  */
-public class TankExampleController extends RoboUnit<Object> {
+public class TankExampleController extends RoboUnit<LegoPlatformMessageTypeEnum> {
+
+	private static final String ATTRIBUTE_NAME_BUTTONS = "button";
+	private final static Collection<AttributeDescriptor<?>> KNOWN_ATTRIBUTES = Collections.unmodifiableCollection(Collections
+			.singleton(DefaultAttributeDescriptor.create(LegoPlatformMessageTypeEnum.class, ATTRIBUTE_NAME_BUTTONS)));
+
 
 	private String target;
 
 	public TankExampleController(RoboContext context, String id) {
-		super(Object.class, context, id);
+		super(LegoPlatformMessageTypeEnum.class, context, id);
 	}
 
 	/**
@@ -32,19 +38,8 @@ public class TankExampleController extends RoboUnit<Object> {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void onMessage(Object message) {
-		if (message instanceof LegoPlatformMessageTypeEnum) {
-			LegoPlatformMessageTypeEnum myMessage = (LegoPlatformMessageTypeEnum) message;
-			processPlatformMessage(myMessage);
-		}
-		if (message instanceof String) {
-			LegoPlatformMessageTypeEnum myMessage = LegoPlatformMessageTypeEnum.getByText(message.toString());
-			processPlatformMessage(myMessage);
-		}
-
-		if (message instanceof LegoSensorMessage) {
-			System.out.println(getClass().getSimpleName() + "sensor: " + message);
-		}
+	public void onMessage(LegoPlatformMessageTypeEnum message) {
+		processPlatformMessage(message);
 	}
 
 	/**
@@ -59,6 +54,17 @@ public class TankExampleController extends RoboUnit<Object> {
 		if (target == null) {
 			throw ConfigurationException.createMissingConfigNameException("target");
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <R> R getMessageAttribute(AttributeDescriptor<R> descriptor, String value) {
+		return descriptor != null ? (R) LegoPlatformMessageTypeEnum.getInternalByName(value) : null;
+	}
+
+	@Override
+	public Collection<AttributeDescriptor<?>> getKnownAttributes() {
+		return KNOWN_ATTRIBUTES;
 	}
 
 	// Private Methods

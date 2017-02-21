@@ -1,6 +1,7 @@
 package com.robo4j.lego.tank.example;
 
 import com.robo4j.core.RoboSystem;
+import com.robo4j.core.client.util.RoboHttpUtils;
 import com.robo4j.core.configuration.Configuration;
 import com.robo4j.core.configuration.ConfigurationFactory;
 import com.robo4j.core.unit.HttpServerUnit;
@@ -39,14 +40,8 @@ public class TankExampleMain {
 		config.setString("target", "controller");
 		config.setInteger("port", PORT);
 		/* specific configuration */
-		Configuration commands = config.createChildConfiguration("commands");
-		commands.setString("path", "tank");
-		commands.setString("method", "GET");
-		commands.setString("move", "move");
-		commands.setString("back", "back");
-		commands.setString("right", "right");
-		commands.setString("left", "left");
-		commands.setString("stop", "stop");
+		Configuration targetUnits = config.createChildConfiguration(RoboHttpUtils.HTTP_TARGET_UNITS);
+		targetUnits.setString("controller", "GET");
 		http.initialize(config);
 
 		BrickButtonsUnit brickButtonsUnit = new BrickButtonsUnit(result, "buttons");
