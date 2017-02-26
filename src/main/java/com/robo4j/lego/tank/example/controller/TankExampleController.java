@@ -13,9 +13,10 @@ import com.robo4j.units.lego.enums.LegoPlatformMessageTypeEnum;
 import com.robo4j.units.lego.platform.LegoPlatformMessage;
 
 /**
+ * Simple Lego Tank Example
+ *
  * @author Marcus Hirt (@hirt)
  * @author Miro Wengner (@miragemiko)
- * @since 30.01.2017
  */
 public class TankExampleController extends RoboUnit<LegoPlatformMessageTypeEnum> {
 
