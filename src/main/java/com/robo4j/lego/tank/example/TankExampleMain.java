@@ -16,7 +16,6 @@ import com.robo4j.units.lego.SimpleTankUnit;
 /**
  * @author Marcus Hirt (@hirt)
  * @author Miro Wengner (@miragemiko)
- * @since 30.01.2017
  */
 public class TankExampleMain {
 
