@@ -38,9 +38,9 @@ import com.robo4j.units.lego.platform.LegoPlatformMessage;
 public class TankExampleController extends RoboUnit<LegoPlatformMessageTypeEnum> {
 
 	private static final String ATTRIBUTE_NAME_BUTTONS = "button";
-	private final static Collection<AttributeDescriptor<?>> KNOWN_ATTRIBUTES = Collections.unmodifiableCollection(Collections
-			.singleton(DefaultAttributeDescriptor.create(LegoPlatformMessageTypeEnum.class, ATTRIBUTE_NAME_BUTTONS)));
-
+	private final static Collection<AttributeDescriptor<?>> KNOWN_ATTRIBUTES = Collections
+			.unmodifiableCollection(Collections.singleton(
+					DefaultAttributeDescriptor.create(LegoPlatformMessageTypeEnum.class, ATTRIBUTE_NAME_BUTTONS)));
 
 	private String target;
 
@@ -49,7 +49,6 @@ public class TankExampleController extends RoboUnit<LegoPlatformMessageTypeEnum>
 	}
 
 	/**
-	 *
 	 * @param message
 	 *            accepted message
 	 * @return
@@ -61,7 +60,6 @@ public class TankExampleController extends RoboUnit<LegoPlatformMessageTypeEnum>
 	}
 
 	/**
-	 *
 	 * @param configuration
 	 *            desired configuration
 	 * @throws ConfigurationException
