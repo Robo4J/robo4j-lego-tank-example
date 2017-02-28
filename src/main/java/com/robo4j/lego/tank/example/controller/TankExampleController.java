@@ -56,7 +56,7 @@ public class TankExampleController extends RoboUnit<LegoPlatformMessageTypeEnum>
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onMessage(LegoPlatformMessageTypeEnum message) {
-		processPlatformMessage(message);
+		processMessage(message);
 	}
 
 	/**
@@ -84,11 +84,11 @@ public class TankExampleController extends RoboUnit<LegoPlatformMessageTypeEnum>
 	}
 
 	// Private Methods
-	private void sendTankMessage(RoboContext ctx, LegoPlatformMessage message) {
+	private void sendMessage(RoboContext ctx, LegoPlatformMessage message) {
 		ctx.getReference(target).sendMessage(message);
 	}
 
-	private void processPlatformMessage(LegoPlatformMessageTypeEnum myMessage) {
-		sendTankMessage(getContext(), new LegoPlatformMessage(myMessage));
+	private void processMessage(LegoPlatformMessageTypeEnum myMessage) {
+		sendMessage(getContext(), new LegoPlatformMessage(myMessage));
 	}
 }
