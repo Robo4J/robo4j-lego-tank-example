@@ -60,8 +60,8 @@ public class TankExampleMain {
 		config.setInteger("port", PORT);
 		/* specific configuration */
 		Configuration targetUnits = config.createChildConfiguration(RoboHttpUtils.HTTP_TARGET_UNITS);
-		targetUnits.setString("controller", "GET");
-		targetUnits.setString("sonicController", "GET");
+		targetUnits.setString(CONTROLLER_PLATFORM, "GET");
+		targetUnits.setString(CONTROLLER_SONIC, "GET");
 		http.initialize(config);
 
 		BrickButtonsUnit brickButtonsUnit = new BrickButtonsUnit(result, "buttons");
