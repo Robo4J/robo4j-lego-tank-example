@@ -25,6 +25,7 @@ import com.robo4j.core.httpunit.HttpServerUnit;
 import com.robo4j.hw.lego.util.BrickUtils;
 import com.robo4j.hw.lego.util.EscapeButtonUtil;
 import com.robo4j.lego.tank.example.controller.TankExampleController;
+import com.robo4j.lego.tank.example.controller.TankSonicController;
 import com.robo4j.units.lego.BasicSonicUnit;
 import com.robo4j.units.lego.BrickButtonsUnit;
 import com.robo4j.units.lego.LcdUnit;
@@ -36,6 +37,8 @@ import com.robo4j.units.lego.SimpleTankUnit;
  */
 public class TankExampleMain {
 
+	private static final String CONTROLLER_PLATFORM = "controller";
+	private static final String CONTROLLER_SONIC = "sonicController";
 	protected static final int PORT = 8025;
 
 	public static void main(String[] args) throws Exception {
@@ -53,16 +56,17 @@ public class TankExampleMain {
 		Configuration config = ConfigurationFactory.createEmptyConfiguration();
 
 		HttpServerUnit http = new HttpServerUnit(result, "http");
-		config.setString("target", "controller");
+		config.setString("target", CONTROLLER_PLATFORM.concat(",").concat(CONTROLLER_SONIC));
 		config.setInteger("port", PORT);
 		/* specific configuration */
 		Configuration targetUnits = config.createChildConfiguration(RoboHttpUtils.HTTP_TARGET_UNITS);
 		targetUnits.setString("controller", "GET");
+		targetUnits.setString("sonicController", "GET");
 		http.initialize(config);
 
 		BrickButtonsUnit brickButtonsUnit = new BrickButtonsUnit(result, "buttons");
 		config = ConfigurationFactory.createEmptyConfiguration();
-		config.setString("target", "controller");
+		config.setString("target", CONTROLLER_PLATFORM);
 		config.setString(BrickUtils.PREFIX_BUTTON.concat("right"), "left");
 		config.setString(BrickUtils.PREFIX_BUTTON.concat("left"), "right");
 		config.setString(BrickUtils.PREFIX_BUTTON.concat("up"), "down");
@@ -70,10 +74,17 @@ public class TankExampleMain {
 		config.setString(BrickUtils.PREFIX_BUTTON.concat("enter"), "enter");
 		brickButtonsUnit.initialize(config);
 
-		TankExampleController ctrl = new TankExampleController(result, "controller");
+		TankExampleController platformCtrl = new TankExampleController(result, CONTROLLER_PLATFORM);
 		config = ConfigurationFactory.createEmptyConfiguration();
 		config.setString("target", "platform");
-		ctrl.initialize(config);
+		platformCtrl.initialize(config);
+
+		TankSonicController sonicCtrl = new TankSonicController(result, CONTROLLER_SONIC);
+		config = ConfigurationFactory.createEmptyConfiguration();
+		config.setString("target", "sonic");
+		sonicCtrl.initialize(config);
+
+
 
 		/* platform is listening to the bus */
 		SimpleTankUnit platform = new SimpleTankUnit(result, "platform");
@@ -91,11 +102,11 @@ public class TankExampleMain {
 
 		BasicSonicUnit sonic = new BasicSonicUnit(result, "sonic");
 		config = ConfigurationFactory.createEmptyConfiguration();
-		config.setString("target", "controller");
+		config.setString("target", "sonicBrain");
 		sonic.initialize(config);
 
 
-		result.addUnits(http, ctrl, platform, brickButtonsUnit, lcd, sonic);
+		result.addUnits(http, platformCtrl, sonicCtrl, platform, brickButtonsUnit, lcd, sonic);
 
 		result.start();
 		lcd.onMessage("http server Port:" + PORT);
@@ -112,5 +123,7 @@ public class TankExampleMain {
 		EscapeButtonUtil.waitForPressAndRelease();
 		system.shutdown();
 	}
+
+	// Private Methdos
 
 }
