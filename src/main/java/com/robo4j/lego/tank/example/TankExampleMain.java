@@ -22,6 +22,7 @@ import com.robo4j.core.client.util.RoboHttpUtils;
 import com.robo4j.core.configuration.Configuration;
 import com.robo4j.core.configuration.ConfigurationFactory;
 import com.robo4j.core.httpunit.HttpServerUnit;
+import com.robo4j.core.util.SystemUtil;
 import com.robo4j.hw.lego.util.BrickUtils;
 import com.robo4j.hw.lego.util.EscapeButtonUtil;
 import com.robo4j.lego.tank.example.controller.TankExampleController;
@@ -84,8 +85,6 @@ public class TankExampleMain {
 		config.setString("target", "sonic");
 		sonicCtrl.initialize(config);
 
-
-
 		/* platform is listening to the bus */
 		SimpleTankUnit platform = new SimpleTankUnit(result, "platform");
 		config = ConfigurationFactory.createEmptyConfiguration();
@@ -109,11 +108,10 @@ public class TankExampleMain {
 		result.addUnits(http, platformCtrl, sonicCtrl, platform, brickButtonsUnit, lcd, sonic);
 
 		result.start();
-		lcd.onMessage("http server Port:" + PORT);
-		lcd.onMessage("Usage: Request GET:");
-		lcd.onMessage("http://<IP>:" + PORT + "?type");
-		lcd.onMessage("=tank&command=stop");
-		lcd.onMessage("commands: stop, move, back, left, right");
+		lcd.onMessage(SystemUtil.generateSocketPoint(http, platformCtrl));
+		lcd.onMessage(SystemUtil.generateSocketPoint(http, sonicCtrl));
+		System.out.println(SystemUtil.generateSocketPoint(http, platformCtrl));
+		System.out.println(SystemUtil.generateSocketPoint(http, sonicCtrl));
 
 		return result;
 
