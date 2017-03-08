@@ -27,6 +27,7 @@ import com.robo4j.hw.lego.util.BrickUtils;
 import com.robo4j.hw.lego.util.EscapeButtonUtil;
 import com.robo4j.lego.tank.example.controller.TankExampleController;
 import com.robo4j.lego.tank.example.controller.TankSonicController;
+import com.robo4j.units.lego.BasicSonicBrainUnit;
 import com.robo4j.units.lego.BasicSonicUnit;
 import com.robo4j.units.lego.BrickButtonsUnit;
 import com.robo4j.units.lego.LcdUnit;
@@ -104,8 +105,14 @@ public class TankExampleMain {
 		config.setString("target", "sonicBrain");
 		sonic.initialize(config);
 
+		BasicSonicBrainUnit sonicBrain = new BasicSonicBrainUnit(result, "sonicBrain");
+		config = ConfigurationFactory.createEmptyConfiguration();
+		config.setString("target", "platform");
+		sonicBrain.initialize(config);
 
-		result.addUnits(http, platformCtrl, sonicCtrl, platform, brickButtonsUnit, lcd, sonic);
+
+
+		result.addUnits(http, platformCtrl, sonicCtrl, platform, brickButtonsUnit, lcd, sonic, sonicBrain);
 
 		result.start();
 		lcd.onMessage(SystemUtil.generateSocketPoint(http, platformCtrl));
