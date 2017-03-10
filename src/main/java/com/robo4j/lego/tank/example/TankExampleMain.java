@@ -41,6 +41,7 @@ public class TankExampleMain {
 
 	private static final String CONTROLLER_PLATFORM = "controller";
 	private static final String CONTROLLER_SONIC = "sonicController";
+	private static final String CONTROLLER_SONIC_BRAIN = "sonicBrain";
 	protected static final int PORT = 8025;
 
 	public static void main(String[] args) throws Exception {
@@ -102,10 +103,10 @@ public class TankExampleMain {
 
 		BasicSonicUnit sonic = new BasicSonicUnit(result, "sonic");
 		config = ConfigurationFactory.createEmptyConfiguration();
-		config.setString("target", "sonicBrain");
+		config.setString("target", CONTROLLER_SONIC_BRAIN);
 		sonic.initialize(config);
 
-		BasicSonicBrainUnit sonicBrain = new BasicSonicBrainUnit(result, "sonicBrain");
+		BasicSonicBrainUnit sonicBrain = new BasicSonicBrainUnit(result, CONTROLLER_SONIC_BRAIN);
 		config = ConfigurationFactory.createEmptyConfiguration();
 		config.setString("target", "platform");
 		sonicBrain.initialize(config);
