@@ -37,11 +37,6 @@ import com.robo4j.units.lego.platform.LegoPlatformMessage;
  */
 public class TankExampleController extends RoboUnit<LegoPlatformMessageTypeEnum> {
 
-	private static final String ATTRIBUTE_NAME_BUTTONS = "button";
-	private final static Collection<AttributeDescriptor<?>> KNOWN_ATTRIBUTES = Collections
-			.unmodifiableCollection(Collections.singleton(
-					DefaultAttributeDescriptor.create(LegoPlatformMessageTypeEnum.class, ATTRIBUTE_NAME_BUTTONS)));
-
 	private String target;
 
 	public TankExampleController(RoboContext context, String id) {
@@ -70,17 +65,6 @@ public class TankExampleController extends RoboUnit<LegoPlatformMessageTypeEnum>
 		if (target == null) {
 			throw ConfigurationException.createMissingConfigNameException("target");
 		}
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <R> R getMessageAttribute(AttributeDescriptor<R> descriptor, String value) {
-		return descriptor != null ? (R) LegoPlatformMessageTypeEnum.getInternalByName(value) : null;
-	}
-
-	@Override
-	public Collection<AttributeDescriptor<?>> getKnownAttributes() {
-		return KNOWN_ATTRIBUTES;
 	}
 
 	// Private Methods

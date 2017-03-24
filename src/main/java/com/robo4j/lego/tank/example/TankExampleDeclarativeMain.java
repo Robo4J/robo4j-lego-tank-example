@@ -22,6 +22,7 @@ import java.io.IOException;
 import com.robo4j.core.RoboBuilder;
 import com.robo4j.core.RoboBuilderException;
 import com.robo4j.core.RoboContext;
+import com.robo4j.core.RoboReference;
 import com.robo4j.core.RoboUnit;
 import com.robo4j.core.client.util.RoboClassLoader;
 import com.robo4j.core.util.SystemUtil;
@@ -38,15 +39,15 @@ public class TankExampleDeclarativeMain {
 		RoboContext ctx = builder.build();
 
 		System.out.println("State before start:");
-		System.out.println(SystemUtil.generateStateReport(ctx));
+		System.out.println(SystemUtil.printStateReport(ctx));
 		ctx.start();
 
 		System.out.println("State after start:");
-		System.out.println(SystemUtil.generateStateReport(ctx));
+		System.out.println(SystemUtil.printStateReport(ctx));
 
-		final RoboUnit<?> httpRef = SystemUtil.genUnitFromContext(ctx, "http");
-		final RoboUnit<?> ctrlRef = SystemUtil.genUnitFromContext(ctx, "controllers");
-		System.out.println(SystemUtil.generateSocketPoint(httpRef, ctrlRef));
+		final RoboReference<?> httpRef = ctx.getReference("http");
+		final RoboReference<?> ctrlRef = ctx.getReference("controllers");
+		System.out.println(SystemUtil.printSocketEndPoint(httpRef, ctrlRef));
 
 		System.out.println("Press Escape to quit!");
 		EscapeButtonUtil.waitForPressAndRelease();

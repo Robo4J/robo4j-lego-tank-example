@@ -61,6 +61,7 @@ public class TankExampleMain {
 		HttpServerUnit http = new HttpServerUnit(result, "http");
 		config.setString("target", CONTROLLER_PLATFORM.concat(",").concat(CONTROLLER_SONIC));
 		config.setInteger("port", PORT);
+		config.setString("packages", "com.robo4j.lego.tank.example.codec");
 		/* specific configuration */
 		Configuration targetUnits = config.createChildConfiguration(RoboHttpUtils.HTTP_TARGET_UNITS);
 		targetUnits.setString(CONTROLLER_PLATFORM, "GET");
@@ -113,13 +114,14 @@ public class TankExampleMain {
 
 
 
-		result.addUnits(http, platformCtrl, sonicCtrl, platform, brickButtonsUnit, lcd, sonic, sonicBrain);
+		result.addUnits(http, platformCtrl, platform, brickButtonsUnit, lcd);
+//		result.addUnits(http, platformCtrl, sonicCtrl, platform, brickButtonsUnit, lcd, sonic, sonicBrain);
 
 		result.start();
-		lcd.onMessage(SystemUtil.generateSocketPoint(http, platformCtrl));
-		lcd.onMessage(SystemUtil.generateSocketPoint(http, sonicCtrl));
-		System.out.println(SystemUtil.generateSocketPoint(http, platformCtrl));
-		System.out.println(SystemUtil.generateSocketPoint(http, sonicCtrl));
+		lcd.onMessage(SystemUtil.printSocketEndPoint(http, platformCtrl));
+		lcd.onMessage(SystemUtil.printSocketEndPoint(http, sonicCtrl));
+		System.out.println(SystemUtil.printSocketEndPoint(http, platformCtrl));
+		System.out.println(SystemUtil.printSocketEndPoint(http, sonicCtrl));
 
 		return result;
 

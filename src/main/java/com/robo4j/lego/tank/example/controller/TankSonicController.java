@@ -70,17 +70,6 @@ public class TankSonicController extends RoboUnit<LegoSonicMessageTypeEnum> {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public <R> R getMessageAttribute(AttributeDescriptor<R> descriptor, String value) {
-        return descriptor != null ? (R) LegoSonicMessageTypeEnum.getInternalByName(value) : null;
-    }
-
-    @Override
-    public Collection<AttributeDescriptor<?>> getKnownAttributes() {
-        return KNOWN_ATTRIBUTES;
-    }
-
     // Private Methods
     private void sendMessage(RoboContext ctx, LegoSonicMessage message) {
         ctx.getReference(target).sendMessage(message);
