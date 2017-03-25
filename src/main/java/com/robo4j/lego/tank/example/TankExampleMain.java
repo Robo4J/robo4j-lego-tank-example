@@ -50,7 +50,7 @@ public class TankExampleMain {
 		tank.shutdown(system);
 	}
 
-	public TankExampleMain(){
+	public TankExampleMain() {
 
 	}
 
@@ -112,10 +112,9 @@ public class TankExampleMain {
 		config.setString("target", "platform");
 		sonicBrain.initialize(config);
 
+		// MAGIC UNIT : sonicBrain
 
-
-		result.addUnits(http, platformCtrl, platform, brickButtonsUnit, lcd);
-//		result.addUnits(http, platformCtrl, sonicCtrl, platform, brickButtonsUnit, lcd, sonic, sonicBrain);
+		result.addUnits(http, platformCtrl, sonicCtrl, platform, brickButtonsUnit, lcd, sonic, sonicBrain);
 
 		result.start();
 		lcd.onMessage(SystemUtil.printSocketEndPoint(http, platformCtrl));
@@ -127,11 +126,9 @@ public class TankExampleMain {
 
 	}
 
-	public void shutdown(RoboSystem system){
+	public void shutdown(RoboSystem system) {
 		EscapeButtonUtil.waitForPressAndRelease();
 		system.shutdown();
 	}
-
-	// Private Methdos
 
 }

@@ -17,12 +17,7 @@
 
 package com.robo4j.lego.tank.example.controller;
 
-import java.util.Collection;
-import java.util.Collections;
-
-import com.robo4j.core.AttributeDescriptor;
 import com.robo4j.core.ConfigurationException;
-import com.robo4j.core.DefaultAttributeDescriptor;
 import com.robo4j.core.RoboContext;
 import com.robo4j.core.RoboUnit;
 import com.robo4j.core.configuration.Configuration;

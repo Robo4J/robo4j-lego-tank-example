@@ -22,39 +22,35 @@ import com.robo4j.core.httpunit.HttpEncoder;
 import com.robo4j.core.httpunit.HttpProducer;
 import com.robo4j.core.httpunit.codec.SimpleCommand;
 import com.robo4j.core.httpunit.codec.SimpleCommandCodec;
-import com.robo4j.units.lego.enums.LegoPlatformMessageTypeEnum;
+import com.robo4j.units.lego.enums.LegoSonicMessageTypeEnum;
 
 /**
- *
- *
  * @author Marcus Hirt (@hirt)
  * @author Miro Wengner (@miragemiko)
  */
-
 @HttpProducer
-public class LegoPlatformMessageCodec
-		implements HttpDecoder<LegoPlatformMessageTypeEnum>, HttpEncoder<LegoPlatformMessageTypeEnum> {
-	private final SimpleCommandCodec codec = new SimpleCommandCodec();
+public class LegoSonicMessageTypeCodec implements HttpDecoder<LegoSonicMessageTypeEnum>, HttpEncoder<LegoSonicMessageTypeEnum> {
+    private final SimpleCommandCodec codec = new SimpleCommandCodec();
 
-	@Override
-	public LegoPlatformMessageTypeEnum decode(String json) {
-		final SimpleCommand simpleCommand = codec.decode(json);
-		return LegoPlatformMessageTypeEnum.getByName(simpleCommand.getValue());
-	}
+    @Override
+    public LegoSonicMessageTypeEnum decode(String json) {
+        final SimpleCommand simpleCommand = codec.decode(json);
+        return LegoSonicMessageTypeEnum.getInternalByName(simpleCommand.getValue());
+    }
 
-	@Override
-	public Class<LegoPlatformMessageTypeEnum> getDecodedClass() {
-		return LegoPlatformMessageTypeEnum.class;
-	}
+    @Override
+    public Class<LegoSonicMessageTypeEnum> getDecodedClass() {
+        return LegoSonicMessageTypeEnum.class;
+    }
 
-	@Override
-	public String encode(LegoPlatformMessageTypeEnum legoPlatformMessageTypeEnum) {
-		final SimpleCommand simpleCommand = new SimpleCommand(legoPlatformMessageTypeEnum.getName());
-		return codec.encode(simpleCommand);
-	}
+    @Override
+    public String encode(LegoSonicMessageTypeEnum legoSonicMessageTypeEnum) {
+        final SimpleCommand simpleCommand = new SimpleCommand(legoSonicMessageTypeEnum.getName());
+        return codec.encode(simpleCommand);
+    }
 
-	@Override
-	public Class<LegoPlatformMessageTypeEnum> getEncodedClass() {
-		return LegoPlatformMessageTypeEnum.class;
-	}
+    @Override
+    public Class<LegoSonicMessageTypeEnum> getEncodedClass() {
+        return LegoSonicMessageTypeEnum.class;
+    }
 }

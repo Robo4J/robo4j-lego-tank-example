@@ -17,12 +17,7 @@
 
 package com.robo4j.lego.tank.example.controller;
 
-import java.util.Collection;
-import java.util.Collections;
-
-import com.robo4j.core.AttributeDescriptor;
 import com.robo4j.core.ConfigurationException;
-import com.robo4j.core.DefaultAttributeDescriptor;
 import com.robo4j.core.RoboContext;
 import com.robo4j.core.RoboUnit;
 import com.robo4j.core.configuration.Configuration;
@@ -35,47 +30,42 @@ import com.robo4j.units.lego.sonic.LegoSonicMessage;
  */
 public class TankSonicController extends RoboUnit<LegoSonicMessageTypeEnum> {
 
-    private static final String ATTRIBUTE_NAME_SONIC = "state";
-    private final static Collection<AttributeDescriptor<?>> KNOWN_ATTRIBUTES = Collections
-            .unmodifiableCollection(Collections.singleton(
-                    DefaultAttributeDescriptor.create(LegoSonicMessageTypeEnum.class, ATTRIBUTE_NAME_SONIC)));
+	private String target;
 
-    private String target;
+	public TankSonicController(RoboContext context, String id) {
+		super(LegoSonicMessageTypeEnum.class, context, id);
+	}
 
-    public TankSonicController(RoboContext context, String id) {
-        super(LegoSonicMessageTypeEnum.class, context, id);
-    }
+	/**
+	 * @param message
+	 *            accepted message
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public void onMessage(LegoSonicMessageTypeEnum message) {
+		processMessage(message);
+	}
 
-    /**
-     * @param message
-     *            accepted message
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public void onMessage(LegoSonicMessageTypeEnum message) {
-        processMessage(message);
-    }
+	/**
+	 * @param configuration
+	 *            desired configuration
+	 * @throws ConfigurationException
+	 */
+	@Override
+	protected void onInitialization(Configuration configuration) throws ConfigurationException {
+		target = configuration.getString("target", null);
+		if (target == null) {
+			throw ConfigurationException.createMissingConfigNameException("target");
+		}
+	}
 
-    /**
-     * @param configuration
-     *            desired configuration
-     * @throws ConfigurationException
-     */
-    @Override
-    protected void onInitialization(Configuration configuration) throws ConfigurationException {
-        target = configuration.getString("target", null);
-        if (target == null) {
-            throw ConfigurationException.createMissingConfigNameException("target");
-        }
-    }
+	// Private Methods
+	private void sendMessage(RoboContext ctx, LegoSonicMessage message) {
+		ctx.getReference(target).sendMessage(message);
+	}
 
-    // Private Methods
-    private void sendMessage(RoboContext ctx, LegoSonicMessage message) {
-        ctx.getReference(target).sendMessage(message);
-    }
-
-    private void processMessage(LegoSonicMessageTypeEnum myMessage) {
-        sendMessage(getContext(), new LegoSonicMessage(myMessage));
-    }
+	private void processMessage(LegoSonicMessageTypeEnum myMessage) {
+		sendMessage(getContext(), new LegoSonicMessage(myMessage));
+	}
 }
